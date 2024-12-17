@@ -1,6 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -17,6 +14,7 @@ model TestingType {
   qrCode      String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+  tests       Test[]   @relation("TestingTypeTests")
 }
 
 model Produk {
@@ -26,4 +24,18 @@ model Produk {
   qrCode    String?
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  tests     Test[]   @relation("ProdukTests")
+}
+
+model Test {
+  id            String      @id @default(auto()) @map("_id") @db.ObjectId
+  produkId      String      @db.ObjectId
+  produk        Produk      @relation("ProdukTests", fields: [produkId], references: [id], onDelete: Cascade)
+  testingTypeId String      @db.ObjectId
+  testingType   TestingType @relation("TestingTypeTests", fields: [testingTypeId], references: [id], onDelete: Cascade)
+  startDate     DateTime
+  endDate       DateTime
+  status        String      @default("inProgress") // "inProgress" | "completed"
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
 }

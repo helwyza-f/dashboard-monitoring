@@ -88,11 +88,11 @@ export default function Navbar() {
                 </li>
                 <li>
                   <Link
-                    href="/hasil_test"
+                    href="/tests"
                     className="block px-4 py-2 hover:bg-green-100 transition duration-200"
                     onClick={() => setIsOpen(false)}
                   >
-                    Test Result
+                    New Test
                   </Link>
                 </li>
               </ul>
