@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import QrCode from "qrcode";
+import { supabase } from "@/lib/supabase";
 
 // GET: Retrieve all testing types
 export async function GET() {
@@ -12,10 +13,10 @@ export async function POST(req: Request) {
   try {
     // Parse the JSON body
     const body = await req.json();
-    console.log("Received data:", body);
+    // console.log("Received data:", body);
 
     // Destructure the incoming data
-    const { name, description } = body;
+    const { name, description, imageUrl } = body;
 
     // Input validation
     if (!name) {
@@ -28,14 +29,15 @@ export async function POST(req: Request) {
       data: {
         name,
         description,
+        imageUrl,
       },
     });
 
-    console.log("Created testing type:", testingType);
+    // console.log("Created testing type:", testingType);
 
     // Generate QR Code content based on the `id`
     const qrCodeContent = `${process.env.NEXT_PUBLIC_BASE_URL}/testing/${testingType.id}`;
-    console.log("QR Code content:", qrCodeContent);
+    // console.log("QR Code content:", qrCodeContent);
 
     // Generate QR Code
     let qrCode: string;
@@ -55,7 +57,7 @@ export async function POST(req: Request) {
       data: { qrCode },
     });
 
-    console.log("Updated testing type with QR code:", updatedTestingType);
+    // console.log("Updated testing type with QR code:", updatedTestingType);
 
     // Respond with the created and updated testing type
     return NextResponse.json(
@@ -80,7 +82,40 @@ export async function DELETE(request: Request) {
   try {
     const { id } = await request.json();
 
-    // Delete the testing type from the database
+    // Ambil data dari database untuk mendapatkan imageUrl
+    const testingType = await prisma.testingType.findUnique({
+      where: { id },
+    });
+
+    if (!testingType) {
+      return NextResponse.json(
+        { error: "Testing type not found" },
+        { status: 404 }
+      );
+    }
+
+    // Hapus file dari Supabase jika imageUrl tersedia
+    if (testingType.imageUrl) {
+      const baseUrl =
+        "https://crmsgchfvmltrwgnvszr.supabase.co/storage/v1/object/public/dashboard/";
+      const filePath = decodeURIComponent(
+        testingType.imageUrl.replace(baseUrl, "")
+      );
+
+      const { error: deleteError } = await supabase.storage
+        .from("dashboard")
+        .remove([filePath]);
+
+      if (deleteError) {
+        console.error("Error deleting file from Supabase:", deleteError);
+        return NextResponse.json(
+          { error: "Failed to delete associated image file" },
+          { status: 500 }
+        );
+      }
+    }
+
+    // Hapus data dari database
     await prisma.testingType.delete({
       where: { id },
     });

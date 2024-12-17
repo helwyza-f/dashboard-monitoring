@@ -12,6 +12,7 @@ model TestingType {
   name        String
   description String?
   qrCode      String?
+  imageUrl    String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
   tests       Test[]   @relation("TestingTypeTests")
@@ -36,6 +37,7 @@ model Test {
   startDate     DateTime
   endDate       DateTime
   status        String      @default("inProgress") // "inProgress" | "completed"
+  qrCode        String?
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
 }

@@ -16,6 +16,7 @@ import { DataTable } from "@/components/ui/data-table";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { downloadQRCode } from "@/lib/actions";
+import ImageUpload from "@/components/image-upload";
 
 // Validation schema using Zod
 const testingTypeSchema = z.object({
@@ -30,11 +31,13 @@ interface TestingType {
   name: string;
   description?: string;
   qrCode?: string;
+  imageUrl?: string;
 }
 
 export default function TestingPage() {
   const [testingTypes, setTestingTypes] = useState<TestingType[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [imageUrl, setImageUrl] = useState<string>(""); // Menyimpan URL gambar
 
   const {
     register,
@@ -67,7 +70,10 @@ export default function TestingPage() {
 
   const onSubmit = async (data: TestingTypeForm) => {
     try {
-      const res = await axios.post("/api/testing-type", data);
+      const res = await axios.post("/api/testing-type", {
+        ...data,
+        imageUrl,
+      });
 
       if (res.status === 201) {
         toast({
@@ -75,6 +81,7 @@ export default function TestingPage() {
           description: "Jenis tes berhasil ditambahkan.",
         });
         reset();
+        setImageUrl("");
         setIsOpen(false);
         fetchTestingTypes();
       }
@@ -114,9 +121,24 @@ export default function TestingPage() {
   // Table Columns
   const columns: ColumnDef<TestingType>[] = [
     {
-      header: "ID",
-      accessorKey: "id",
+      header: () => <div className="flex justify-center">Gambar</div>,
+      accessorKey: "imageUrl",
+      cell: ({ row }) =>
+        row.original.imageUrl ? (
+          <Image
+            src={row.original.imageUrl}
+            alt={`Image for ${row.original.name}`}
+            width={100}
+            height={100}
+            className="rounded-md mx-auto"
+          />
+        ) : (
+          <span className="text-muted-foreground text-center italic flex justify-center">
+            Tidak ada gambar
+          </span>
+        ),
     },
+
     {
       header: "Nama",
       accessorKey: "name",
@@ -190,6 +212,16 @@ export default function TestingPage() {
               <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
             )}
             <Textarea placeholder="Deskripsi" {...register("description")} />
+            <div className="max-w-md p-4 border">
+              <ImageUpload
+                folder="testing-types"
+                value={imageUrl}
+                onChange={(url) => setImageUrl(url)}
+                onRemove={() => setImageUrl("")}
+                disabled={false}
+              />
+            </div>
+
             <Button type="submit" className="bg-green-500 hover:bg-green-600">
               Tambah Jenis Tes
             </Button>

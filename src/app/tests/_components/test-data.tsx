@@ -13,6 +13,8 @@ import axios from "axios";
 import { Test } from "@prisma/client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
+import { downloadQRCode } from "@/lib/actions";
 
 export interface TestData {
   id: string;
@@ -40,10 +42,6 @@ export default function TestData({ data, deleteTest }: DataTableProps) {
 
   // Define columns for React Table
   const columns: ColumnDef<Test>[] = [
-    {
-      accessorKey: "id",
-      header: "ID",
-    },
     {
       accessorKey: "produk.nama",
       header: "Product Name",
@@ -73,6 +71,39 @@ export default function TestData({ data, deleteTest }: DataTableProps) {
         }),
     },
     {
+      accessorKey: "status",
+      header: "Status",
+      cell: ({ row }) =>
+        row.original.status === "inProgress" ? "In Progress" : "Completed",
+    },
+    {
+      accessorKey: "qrCode",
+      header: "QR Code",
+      cell: ({ row }) =>
+        row.original.qrCode ? (
+          <div className="flex flex-col gap-2 justify-center items-center">
+            <Image
+              src={row.original.qrCode}
+              alt={`QR Code for ${row.original.produkId}`}
+              className="w-24 h-24"
+              width={100}
+              height={100}
+            />{" "}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() =>
+                downloadQRCode(row.original.qrCode!, row.original.produkId)
+              }
+            >
+              Download QR
+            </Button>
+          </div>
+        ) : (
+          "Tidak ada QR Code"
+        ),
+    },
+    {
       id: "actions",
       header: "Actions",
       cell: ({ row }) => (
@@ -84,7 +115,7 @@ export default function TestData({ data, deleteTest }: DataTableProps) {
             Delete
           </Button>
           <Button variant="outline">
-            <Link href={`/testing/${row.original.id}`}>Lihat</Link>
+            <Link href={`/tests/${row.original.id}`}>Lihat</Link>
           </Button>
         </div>
       ),

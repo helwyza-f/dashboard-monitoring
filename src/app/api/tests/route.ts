@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-
+import QrCode from "qrcode";
 export async function GET() {
   try {
     const tests = await prisma.test.findMany({
@@ -12,7 +12,7 @@ export async function GET() {
         updatedAt: "desc",
       },
     });
-
+    console.log(tests);
     return NextResponse.json(tests, { status: 200 });
   } catch (error) {
     console.error("Error fetching tests:", error);
@@ -45,8 +45,26 @@ export async function POST(req: Request) {
       },
     });
 
+    const qrCodeContent = `${process.env.NEXT_PUBLIC_BASE_URL}/tests/${newTest.id}`;
+
+    let qrCode: string;
+    try {
+      qrCode = await QrCode.toDataURL(qrCodeContent);
+    } catch (qrError) {
+      console.error("Error generating QR code:", qrError);
+      return NextResponse.json(
+        { error: "Failed to generate QR code" },
+        { status: 500 }
+      );
+    }
+
+    const updatedTest = await prisma.test.update({
+      where: { id: newTest.id },
+      data: { qrCode },
+    });
+
     return NextResponse.json(
-      { message: "Test created successfully!", test: newTest },
+      { message: "Test created successfully!", test: updatedTest },
       { status: 201 }
     );
   } catch (error: any) {
