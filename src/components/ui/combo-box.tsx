@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Check, ChevronsUpDown, List, Search } from "lucide-react";
+import { ChevronsUpDown, Search } from "lucide-react";
 import ListItem from "./list-item";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
@@ -9,8 +9,6 @@ import {
   Command,
   CommandEmpty,
   CommandGroup,
-  CommandInput,
-  CommandItem,
   CommandList,
 } from "@/components/ui/command";
 import {
@@ -39,7 +37,7 @@ export default function ComboBox({
     { label: string; value: string }[]
   >([]);
   const [open, setOpen] = React.useState(false);
-  const handleSearchTerm = (e: any) => {
+  const handleSearchTerm = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(e.target.value);
     setFiltered(
       options.filter((item) =>

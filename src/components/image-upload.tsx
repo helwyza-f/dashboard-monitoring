@@ -41,7 +41,7 @@ export default function ImageUpload({
     try {
       const filePath = `${folder}/${file.name}`;
 
-      const { data, error } = await supabase.storage
+      const { error } = await supabase.storage
         .from("dashboard")
         .upload(filePath, file, { upsert: true });
 
@@ -59,7 +59,7 @@ export default function ImageUpload({
         toast.success("Image uploaded successfully.");
       }
     } catch (err) {
-      toast.error("Something went wrong during upload.");
+      toast.error("Something went wrong during upload." + err);
     } finally {
       setIsLoading(false);
     }
@@ -90,7 +90,7 @@ export default function ImageUpload({
 
       toast.success("Image deleted successfully.");
     } catch (err) {
-      toast.error("Something went wrong during deletion.");
+      toast.error("Something went wrong during deletion." + err);
     } finally {
       setIsLoading(false);
     }

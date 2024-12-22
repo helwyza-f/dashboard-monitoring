@@ -12,7 +12,7 @@ export async function GET() {
         updatedAt: "desc",
       },
     });
-    console.log(tests);
+    // console.log(tests);
     return NextResponse.json(tests, { status: 200 });
   } catch (error) {
     console.error("Error fetching tests:", error);
@@ -67,10 +67,9 @@ export async function POST(req: Request) {
       { message: "Test created successfully!", test: updatedTest },
       { status: 201 }
     );
-  } catch (error: any) {
-    console.error("Error creating test:", error.message);
+  } catch (error) {
     return NextResponse.json(
-      { message: "Failed to create test.", error: error.message },
+      { message: "Failed to update test.", error: error },
       { status: 500 }
     );
   }
@@ -97,10 +96,9 @@ export async function DELETE(req: Request) {
       { message: "Test deleted successfully!", test: deletedTest },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error("Error deleting test:", error.message);
+  } catch (error) {
     return NextResponse.json(
-      { message: "Failed to delete test.", error: error.message },
+      { message: "Failed to update test.", error: error },
       { status: 500 }
     );
   }
@@ -134,10 +132,9 @@ export async function PATCH(req: Request) {
       { message: "Test updated successfully!", test: updatedTest },
       { status: 200 }
     );
-  } catch (error: any) {
-    console.error("Error updating test:", error.message);
+  } catch (error) {
     return NextResponse.json(
-      { message: "Failed to update test.", error: error.message },
+      { message: "Failed to update test.", error: error },
       { status: 500 }
     );
   }

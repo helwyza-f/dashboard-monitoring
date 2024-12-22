@@ -8,7 +8,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 
-import { toast } from "@/hooks/use-toast";
+import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -206,25 +206,39 @@ export default function TestingPage() {
           <h2 className="text-xl font-semibold mb-4 text-gray-700">
             Tambah Jenis Tes
           </h2>
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <Input placeholder="Nama Tes" {...register("name")} />
-            {errors.name && (
-              <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>
-            )}
-            <Textarea placeholder="Deskripsi" {...register("description")} />
-            <div className="max-w-md p-4 border">
-              <ImageUpload
-                folder="testing-types"
-                value={imageUrl}
-                onChange={(url) => setImageUrl(url)}
-                onRemove={() => setImageUrl("")}
-                disabled={false}
-              />
+          <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
+            <div className="grid grid-cols-1 md:grid-cols-2">
+              <div className="flex flex-col space-y-4 p-4 border-2 rounded-md">
+                <Input placeholder="Nama Tes" {...register("name")} />
+                {errors.name && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.name.message}
+                  </p>
+                )}
+                <Textarea
+                  placeholder="Deskripsi"
+                  {...register("description")}
+                  rows={4}
+                />
+              </div>
+              <div className="max-w-md mx-auto p-4 border-2 rounded-md flex justify-center items-center">
+                <ImageUpload
+                  folder="testing-types"
+                  value={imageUrl}
+                  onChange={(url) => setImageUrl(url)}
+                  onRemove={() => setImageUrl("")}
+                  disabled={false}
+                />
+              </div>
             </div>
-
-            <Button type="submit" className="bg-green-500 hover:bg-green-600">
-              Tambah Jenis Tes
-            </Button>
+            <div className="w-full ">
+              <Button
+                type="submit"
+                className="bg-green-500 hover:bg-green-600 mx-auto"
+              >
+                Tambah Jenis Tes
+              </Button>
+            </div>
           </form>
         </div>
       )}

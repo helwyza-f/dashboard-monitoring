@@ -10,15 +10,6 @@ export default function Navbar() {
     setIsOpen(!isOpen);
   };
 
-  const closeDropdown = (event: React.MouseEvent) => {
-    if (
-      !(event.target as HTMLElement).closest("#dropdown-menu") &&
-      !(event.target as HTMLElement).closest("#hamburger-btn")
-    ) {
-      setIsOpen(false);
-    }
-  };
-
   return (
     <header className="bg-gray-100 text-green-600 fixed top-0 left-0 w-full z-50 shadow">
       <div className="w-full p-6 flex justify-between items-center">

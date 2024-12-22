@@ -1,16 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import {
-  useReactTable,
-  ColumnDef,
-  getCoreRowModel,
-} from "@tanstack/react-table";
+import { ColumnDef } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { DataTable } from "@/components/ui/data-table";
-import { toast } from "@/hooks/use-toast";
+import toast from "react-hot-toast";
 import axios from "axios";
 import Image from "next/image";
 import { downloadQRCode } from "@/lib/actions";

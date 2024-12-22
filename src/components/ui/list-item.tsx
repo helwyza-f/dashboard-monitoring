@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
 
 interface ListItemProps {
-  category: any;
-  onSelect: (category: any) => void;
+  category: { label: string; value: string };
+  onSelect: (category: { label: string; value: string }) => void;
   isChecked: boolean;
 }
 

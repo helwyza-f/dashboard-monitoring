@@ -8,7 +8,6 @@ import {
   getSortedRowModel,
   SortingState,
   getPaginationRowModel,
-  ColumnFiltersState,
   getFilteredRowModel,
 } from "@tanstack/react-table";
 import { Button } from "@/components/ui/button";
@@ -34,7 +33,7 @@ export function DataTable<TData, TValue>({
   data,
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
-  const [globalFilter, setGlobalFilter] = useState<any>([]);
+  const [globalFilter, setGlobalFilter] = useState<string>("");
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 5,

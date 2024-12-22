@@ -46,7 +46,6 @@ export default function FormTest({
   fourDaysLater.setDate(now.getDate() + 4);
 
   const {
-    register,
     handleSubmit,
     setValue,
     watch,
@@ -73,11 +72,9 @@ export default function FormTest({
       router.refresh();
       fetchData();
       toggleEditing();
-    } catch (error: any) {
+    } catch (error) {
       console.error("Error submitting form:", error);
-      toast.error(
-        error.response?.data?.message || "Failed to create test. Try again."
-      );
+      toast.error(error || "Failed to create test. Try again.");
     }
   };
 

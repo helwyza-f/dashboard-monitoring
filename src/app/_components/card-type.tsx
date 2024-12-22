@@ -19,7 +19,9 @@ export function CardType({ testId, title, image, stats }: CardTypeProps) {
     <Card className="relative p-6 flex flex-col justify-between">
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold text-green-600">{title}</h2>
-        <img
+        <Image
+          width={80}
+          height={80}
           src={image}
           alt={title}
           className="w-20 h-20 object-contain rounded-lg border-2 border-green-200"
