@@ -26,7 +26,7 @@ const testingTypeSchema = z.object({
     .max(50, { message: "Nama tes tidak boleh lebih dari 50 karakter." }),
   description: z
     .string()
-    .max(100, { message: "Deskripsi tidak boleh lebih dari 100 karakter." })
+    .max(300, { message: "Deskripsi tidak boleh lebih dari 300 karakter." })
     .optional(),
 });
 
@@ -71,6 +71,7 @@ export default function TestingPage() {
   }, []);
 
   const onSubmit = async (data: TestingTypeForm) => {
+    console.log(data);
     try {
       const res = await axios.post("/api/testing-type", {
         ...data,
@@ -158,7 +159,7 @@ export default function TestingPage() {
         return (
           <div className="flex justify-center">
             <span className="text-gray-700 w-full text-md text-center truncate">
-              {displayDescription as String}
+              {displayDescription as string}
             </span>
           </div>
         );
@@ -244,6 +245,11 @@ export default function TestingPage() {
                   {...register("description")}
                   rows={4}
                 />
+                {errors.description && (
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.description.message}
+                  </p>
+                )}
               </div>
               <div className="max-w-md mx-auto p-4 border-2 rounded-md flex justify-center items-center">
                 <ImageUpload
