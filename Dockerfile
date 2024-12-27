@@ -1,23 +1,26 @@
-# Gunakan image Node.js sebagai base image
+# Menggunakan Node.js sebagai base image
 FROM node:22.1.0
 
-# Set working directory
+# Set work directory
 WORKDIR /app
 
-# Salin package.json dan package-lock.json
-COPY package*.json ./
+# Salin package.json dan lock file
+COPY package.json package-lock.json ./
 
-# Install dependencies
-RUN npm install --force --legacy-peer-deps
+# Instal dependencies
+RUN npm ci --force --legacy-peer-deps
 
-# Salin semua file ke dalam container
+# Salin seluruh kode aplikasi
 COPY . .
+
+# Prisma generate
+RUN npx prisma generate
 
 # Build aplikasi
 RUN npm run build
 
-# Expose port yang digunakan oleh aplikasi
+# Expose port
 EXPOSE 3000
 
-# Jalankan aplikasi
+# Jalankan server Next.js
 CMD ["npm", "start"]

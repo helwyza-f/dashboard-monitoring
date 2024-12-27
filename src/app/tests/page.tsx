@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import FormTest from "./_components/form-test";
 import TestDataTable, { TestData } from "./_components/test-data-table";
 import { Button } from "@/components/ui/button";
-import { Produk, TestingType } from "@prisma/client";
+import { Produk, TestingType } from "@/types/type";
 
 export default function Page() {
   const [products, setProducts] = useState<Produk[]>([]);

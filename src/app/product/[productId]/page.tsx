@@ -6,6 +6,16 @@ import Link from "next/link";
 
 import QRCODE from "./_components/qr-code";
 
+interface Test {
+  id: string;
+  status: string;
+  testingType: {
+    name: string;
+  };
+  startDate: Date;
+  endDate: Date;
+}
+
 export default async function ProductDetailPage({
   params,
 }: {
@@ -70,7 +80,7 @@ export default async function ProductDetailPage({
           </h2>
           <div className="space-y-4">
             {product.tests.length > 0 ? (
-              product.tests.map((test) => (
+              product.tests.map((test: Test) => (
                 <div
                   key={test.id}
                   className="border p-4 rounded-lg hover:border-green-500 transition-colors"

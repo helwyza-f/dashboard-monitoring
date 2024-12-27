@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { TestingType, Test } from "@prisma/client";
+
 import { NextResponse } from "next/server";
 
 interface Testing {

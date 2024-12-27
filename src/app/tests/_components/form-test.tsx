@@ -9,7 +9,7 @@ import { DatePicker } from "@/components/ui/date-picker";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { Produk, TestingType } from "@prisma/client";
+import { Produk, TestingType } from "@/types/type";
 
 const formSchema = z.object({
   produkId: z.string().nonempty("Product is required."),

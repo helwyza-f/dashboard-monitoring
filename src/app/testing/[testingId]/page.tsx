@@ -6,6 +6,16 @@ import Link from "next/link";
 
 import QRCODE from "./components/qr-code";
 
+interface Test {
+  id: string;
+  status: string;
+  produk: {
+    nama: string;
+  };
+  startDate: Date;
+  endDate: Date;
+}
+
 export default async function TestingTypePage({
   params,
 }: {
@@ -30,7 +40,7 @@ export default async function TestingTypePage({
   }
   const totalTests = testingType.tests.length;
   const completedTests = testingType.tests.filter(
-    (test) => test.status === "completed"
+    (test: Test) => test.status === "completed"
   ).length;
   const inProgressTests = totalTests - completedTests;
   return (
@@ -100,7 +110,7 @@ export default async function TestingTypePage({
             </h2>
             <div className="space-y-4">
               {testingType.tests.length > 0 ? (
-                testingType.tests.map((test) => (
+                testingType.tests.map((test: Test) => (
                   <div
                     key={test.id}
                     className="border p-4 rounded-lg hover:border-green-500 transition-colors"

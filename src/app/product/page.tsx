@@ -73,7 +73,7 @@ export default function ProductPage() {
         data: { id },
       });
       if (res.status === 200) {
-        toast({ title: "Deleted", description: "Produk berhasil dihapus." });
+        toast.success("Produk berhasil dihapus.");
         fetchProducts();
       }
     } catch (error) {
