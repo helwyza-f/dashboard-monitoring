@@ -34,7 +34,7 @@ export default function TestDataTable({ data, deleteTest }: DataTableProps) {
 
   // Define columns for React Table
   const columns: ColumnDef<TestData>[] = [
-  {
+    {
       id: "id",
       header: () => (
         <span className="font-boldxt-center flex justify-center">No</span>
@@ -185,7 +185,33 @@ export default function TestDataTable({ data, deleteTest }: DataTableProps) {
         <h2 className="text-xl font-semibold mb-4 text-gray-700">
           Daftar Test
         </h2>
-        <DataTable columns={columns} data={testData} />
+        <div className="block md:hidden">
+          {testData.map((test) => {
+            const startDate = new Date(test.startDate).toLocaleDateString("id-ID", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+            const endDate = new Date(test.endDate).toLocaleDateString("id-ID", {
+              year: "numeric",
+              month: "short",
+              day: "numeric",
+            });
+            const statusLabel = test.status === "inProgress" ? "Dalam Proses" : "Selesai";
+
+            return (
+              <div key={test.id} className="border-b py-4">
+                <h3 className="font-semibold">{test.produk.nama}</h3>
+                <p>Testing Type: {test.testingType.name}</p>
+                <p>Tanggal: {`${startDate} - ${endDate}`}</p>
+                <p>Status: {statusLabel}</p>
+              </div>
+            );
+          })}
+        </div>
+        <div className="hidden md:block">
+          <DataTable columns={columns} data={testData} />
+        </div>
       </div>
     </div>
   );

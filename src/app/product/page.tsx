@@ -215,7 +215,20 @@ export default function ProductPage() {
         <h2 className="text-xl font-semibold mb-4 text-gray-700">
           Daftar Produk
         </h2>
-        <DataTable columns={columns} data={products} />
+        {/* Tampilkan daftar untuk mobile */}
+        <div className="block md:hidden">
+          {products.map((product) => (
+            <div key={product.id} className="border-b py-4">
+              <h3 className="font-semibold mb-2">{product.nama}</h3>
+              <p className="text-sm">{product.deskripsi}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* Tampilkan tabel untuk desktop */}
+        <div className="hidden md:block">
+          <DataTable columns={columns} data={products} />
+        </div>
       </div>
     </div>
   );
