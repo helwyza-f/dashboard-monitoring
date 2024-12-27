@@ -187,25 +187,33 @@ export default function TestDataTable({ data, deleteTest }: DataTableProps) {
         </h2>
         <div className="block md:hidden">
           {testData.map((test) => {
-            const startDate = new Date(test.startDate).toLocaleDateString("id-ID", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            });
+            const startDate = new Date(test.startDate).toLocaleDateString(
+              "id-ID",
+              {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              }
+            );
             const endDate = new Date(test.endDate).toLocaleDateString("id-ID", {
               year: "numeric",
               month: "short",
               day: "numeric",
             });
-            const statusLabel = test.status === "inProgress" ? "Dalam Proses" : "Selesai";
+            const statusLabel =
+              test.status === "inProgress" ? "Dalam Proses" : "Selesai";
 
             return (
-              <div key={test.id} className="border-b py-4">
+              <Link
+                href={`/tests/${test.id}`}
+                key={test.id}
+                className="border-b py-4 block"
+              >
                 <h3 className="font-semibold">{test.produk.nama}</h3>
                 <p>Testing Type: {test.testingType.name}</p>
                 <p>Tanggal: {`${startDate} - ${endDate}`}</p>
                 <p>Status: {statusLabel}</p>
-              </div>
+              </Link>
             );
           })}
         </div>

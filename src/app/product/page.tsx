@@ -218,10 +218,14 @@ export default function ProductPage() {
         {/* Tampilkan daftar untuk mobile */}
         <div className="block md:hidden">
           {products.map((product) => (
-            <div key={product.id} className="border-b py-4">
+            <Link
+              href={`/product/${product.id}`}
+              key={product.id}
+              className="border-b py-4"
+            >
               <h3 className="font-semibold mb-2">{product.nama}</h3>
               <p className="text-sm">{product.deskripsi}</p>
-            </div>
+            </Link>
           ))}
         </div>
 
