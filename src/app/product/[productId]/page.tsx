@@ -54,7 +54,7 @@ export default async function ProductDetailPage({
           </h2>
           <div className="space-y-4">
             <div>
-              <p className="text-sm text-gray-500text-lg">
+              <p className=" text-gray-700 text-md">
                 {product.deskripsi || "-"}
               </p>
             </div>

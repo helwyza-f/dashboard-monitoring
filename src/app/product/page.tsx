@@ -85,21 +85,41 @@ export default function ProductPage() {
   // Define columns for React Table
   const columns: ColumnDef<Product>[] = [
     {
-      accessorKey: "id",
-      header: "ID",
-    },
-    {
       accessorKey: "nama",
-      header: "Nama",
+      header: () => (
+        <span className="font-bold text-center flex justify-center">Nama</span>
+      ),
+      cell: ({ row }) => (
+        <span className="font-bold flex justify-center">
+          {row.original.nama}
+        </span>
+      ),
     },
     {
       accessorKey: "deskripsi",
-      header: "Deskripsi",
-      cell: ({ row }) => row.original.deskripsi || "-",
+      header: () => (
+        <span className="font-bold text-center flex justify-center">
+          Deskripsi
+        </span>
+      ),
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <span className="text-gray-700 text-md">
+            {row.original.deskripsi
+              ? row.original.deskripsi.slice(0, 50) +
+                (row.original.deskripsi.length > 50 ? "..." : "")
+              : "-"}
+          </span>
+        </div>
+      ),
     },
     {
       accessorKey: "qrCode",
-      header: "QR Code",
+      header: () => (
+        <span className="font-bold text-center flex justify-center">
+          QR Code
+        </span>
+      ),
       cell: ({ row }) =>
         row.original.qrCode ? (
           <div className="flex flex-col gap-2 justify-center items-center">
@@ -126,17 +146,19 @@ export default function ProductPage() {
     },
     {
       id: "actions",
-      header: "Aksi",
+      header: () => (
+        <span className="font-bold text-center flex justify-center">Aksi</span>
+      ),
       cell: ({ row }) => (
         <div className="space-x-2 flex justify-center">
+          <Button variant={"outline"}>
+            <Link href={`/product/${row.original.id}`}>Detail</Link>
+          </Button>
           <Button
             variant="destructive"
             onClick={() => deleteProduct(row.original.id)}
           >
             Hapus
-          </Button>
-          <Button variant={"outline"}>
-            <Link href={`/product/${row.original.id}`}>Detail</Link>
           </Button>
         </div>
       ),

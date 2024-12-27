@@ -60,6 +60,15 @@ export default function Navbar() {
                 </li>
                 <li>
                   <Link
+                    href="/testing"
+                    className="block px-4 py-2 hover:bg-green-100 transition duration-200"
+                    onClick={() => setIsOpen(false)}
+                  >
+                    Jenis Test
+                  </Link>
+                </li>
+                <li>
+                  <Link
                     href="/product"
                     className="block px-4 py-2 hover:bg-green-100 transition duration-200"
                     onClick={() => setIsOpen(false)}
@@ -70,20 +79,11 @@ export default function Navbar() {
 
                 <li>
                   <Link
-                    href="/testing"
-                    className="block px-4 py-2 hover:bg-green-100 transition duration-200"
-                    onClick={() => setIsOpen(false)}
-                  >
-                    Testing
-                  </Link>
-                </li>
-                <li>
-                  <Link
                     href="/tests"
                     className="block px-4 py-2 hover:bg-green-100 transition duration-200"
                     onClick={() => setIsOpen(false)}
                   >
-                    New Test
+                    Data Test
                   </Link>
                 </li>
               </ul>

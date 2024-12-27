@@ -62,11 +62,11 @@ export default async function TestingTypePage({
           <div className="space-y-4">
             <div>
               <p className="text-sm text-gray-500">Deskripsi</p>
-              <p className="text-lg">{testingType.description || "-"}</p>
+              <p className="text-md">{testingType.description || "-"}</p>
             </div>
 
             {testingType.imageUrl && (
-              <div className="mt-4 flex flex-col items-center justify-center">
+              <div className="mt-5 flex flex-col items-center justify-center">
                 <p className="text-sm text-gray-500 mb-2">Gambar</p>
                 <Image
                   src={testingType.imageUrl}

@@ -20,8 +20,14 @@ import ImageUpload from "@/components/image-upload";
 
 // Validation schema using Zod
 const testingTypeSchema = z.object({
-  name: z.string().min(1, { message: "Nama tes harus diisi." }),
-  description: z.string().optional(),
+  name: z
+    .string()
+    .min(1, { message: "Nama tes harus diisi." })
+    .max(50, { message: "Nama tes tidak boleh lebih dari 50 karakter." }),
+  description: z
+    .string()
+    .max(100, { message: "Deskripsi tidak boleh lebih dari 100 karakter." })
+    .optional(),
 });
 
 type TestingTypeForm = z.infer<typeof testingTypeSchema>;
@@ -122,20 +128,53 @@ export default function TestingPage() {
     },
 
     {
-      header: "Nama",
+      header: () => (
+        <span className="font-bold text-center flex justify-center">Nama</span>
+      ),
       accessorKey: "name",
+      cell: ({ row }) => (
+        <div className="flex justify-center">
+          <span className="text-gray-700 text-md font-semibold">
+            {row.original.name}
+          </span>
+        </div>
+      ),
     },
     {
-      header: "Deskripsi",
+      header: () => (
+        <span className="font-bold text-center flex justify-center">
+          Deskripsi
+        </span>
+      ),
       accessorKey: "description",
-      cell: ({ getValue }) => getValue() || "-",
+      cell: ({ getValue }) => {
+        const description = getValue() || ""; // Pastikan description selalu berupa string
+        const maxLength = 50; // Tentukan panjang maksimum deskripsi yang ingin ditampilkan
+        const displayDescription =
+          typeof description === "string" && description.length > maxLength
+            ? description.slice(0, maxLength) + "..." // Memotong teks dan menambahkan "..."
+            : description || ""; // Pastikan selalu mengembalikan string
+
+        return (
+          <div className="flex justify-center">
+            <span className="text-gray-700 w-full text-md text-center truncate">
+              {displayDescription as String}
+            </span>
+          </div>
+        );
+      },
     },
+
     {
-      header: "QR Code",
+      header: () => (
+        <span className="font-bold text-center flex justify-center">
+          QR Code
+        </span>
+      ),
       accessorKey: "qrCode",
       cell: ({ row }) =>
         row.original.qrCode ? (
-          <div>
+          <div className="flex flex-col items-center justify-center">
             <Image
               src={row.original.qrCode}
               alt={`QR Code for ${row.original.name}`}
@@ -157,17 +196,20 @@ export default function TestingPage() {
         ),
     },
     {
-      header: "Aksi",
+      id: "actions",
+      header: () => (
+        <span className="font-bold text-center flex justify-center">Aksi</span>
+      ),
       cell: ({ row }) => (
         <div className="space-x-2 flex justify-center">
+          <Button variant={"outline"}>
+            <Link href={`/testing/${row.original.id}`}>Detail</Link>
+          </Button>
           <Button
             variant="destructive"
             onClick={() => deleteTestingType(row.original.id)}
           >
             Hapus
-          </Button>
-          <Button variant={"outline"}>
-            <Link href={`/testing/${row.original.id}`}>Detail</Link>
           </Button>
         </div>
       ),

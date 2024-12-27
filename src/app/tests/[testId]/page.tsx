@@ -70,11 +70,11 @@ export default async function TestDetailPage({
             <div className="space-y-4">
               <div>
                 <p className="text-sm text-gray-500">Nama Produk</p>
-                <p className="text-lg font-medium">{test.produk.nama}</p>
+                <p className="text-md font-medium">{test.produk.nama}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Deskripsi Produk</p>
-                <p className="text-lg">{test.produk.deskripsi || "-"}</p>
+                <p className="text-md">{test.produk.deskripsi || "-"}</p>
               </div>
               <Link href={`/product/${test.produkId}`}>
                 <Button variant="link" className="p-0">
@@ -91,11 +91,11 @@ export default async function TestDetailPage({
             <div className="space-y-4">
               <div>
                 <p className="text-sm text-gray-500">Nama Test</p>
-                <p className="text-lg font-medium">{test.testingType.name}</p>
+                <p className="text-md font-medium">{test.testingType.name}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500">Deskripsi Test</p>
-                <p className="text-lg">{test.testingType.description || "-"}</p>
+                <p className="text-md">{test.testingType.description || "-"}</p>
               </div>
               <Link href={`/testing/${test.testingTypeId}`}>
                 <Button variant="link" className="p-0">
