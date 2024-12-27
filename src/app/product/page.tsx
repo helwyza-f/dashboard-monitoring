@@ -224,7 +224,7 @@ export default function ProductPage() {
               className="border-b py-4"
             >
               <h3 className="font-semibold mb-2">{product.nama}</h3>
-              <p className="text-sm">{product.deskripsi}</p>
+              <p className="text-sm mb-4">{product.deskripsi}</p>
             </Link>
           ))}
         </div>
