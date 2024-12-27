@@ -34,6 +34,15 @@ export default function TestDataTable({ data, deleteTest }: DataTableProps) {
 
   // Define columns for React Table
   const columns: ColumnDef<TestData>[] = [
+  {
+      id: "id",
+      header: () => (
+        <span className="font-boldxt-center flex justify-center">No</span>
+      ),
+      cell: ({ row }) => (
+        <span className="flex justify-center">{row.index + 1}</span>
+      ),
+    },
     {
       accessorKey: "produk.nama",
       header: () => <div className="flex justify-center">Produk</div>,

@@ -85,6 +85,15 @@ export default function ProductPage() {
   // Define columns for React Table
   const columns: ColumnDef<Product>[] = [
     {
+      id: "id",
+      header: () => (
+        <span className="font-boldxt-center flex justify-center">No</span>
+      ),
+      cell: ({ row }) => (
+        <span className="flex justify-center">{row.index + 1}</span>
+      ),
+    },
+    {
       accessorKey: "nama",
       header: () => (
         <span className="font-bold text-center flex justify-center">Nama</span>
