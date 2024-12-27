@@ -34,11 +34,7 @@ export default function ProductPage() {
       setProducts(res.data);
     } catch (error) {
       console.error("Error fetching products:", error);
-      toast({
-        title: "Error",
-        description: "Gagal mengambil data produk.",
-        variant: "destructive",
-      });
+      toast.error("Gagal mengambil data produk.");
     }
   };
 
@@ -49,21 +45,14 @@ export default function ProductPage() {
   // Add a product
   const addProduct = async () => {
     if (!nama) {
-      toast({
-        title: "Error",
-        description: "Nama produk harus diisi.",
-        variant: "destructive",
-      });
+      toast.error("Nama produk harus diisi.");
       return;
     }
 
     try {
       const res = await axios.post("/api/products", { nama, deskripsi });
       if (res.status === 201) {
-        toast({
-          title: "Success",
-          description: "Produk berhasil ditambahkan.",
-        });
+        toast.success("Produk berhasil ditambahkan.");
         setNama("");
         setDeskripsi("");
         toggleForm();
@@ -71,11 +60,7 @@ export default function ProductPage() {
       }
     } catch (error) {
       console.error("Error adding product:", error);
-      toast({
-        title: "Error",
-        description: "Gagal menambahkan produk.",
-        variant: "destructive",
-      });
+      toast.error("Gagal menambahkan produk.");
     }
   };
 
@@ -93,11 +78,7 @@ export default function ProductPage() {
       }
     } catch (error) {
       console.error("Error deleting product:", error);
-      toast({
-        title: "Error",
-        description: "Gagal menghapus produk.",
-        variant: "destructive",
-      });
+      toast.error("Gagal menghapus produk.");
     }
   };
 

@@ -56,11 +56,7 @@ export default function TestingPage() {
       setTestingTypes(res.data);
     } catch (error) {
       console.error("Error fetching testing types:", error);
-      toast({
-        title: "Error",
-        description: "Gagal mengambil data jenis tes.",
-        variant: "destructive",
-      });
+      toast.error("Gagal mengambil data jenis tes.");
     }
   };
 
@@ -76,10 +72,7 @@ export default function TestingPage() {
       });
 
       if (res.status === 201) {
-        toast({
-          title: "Success",
-          description: "Jenis tes berhasil ditambahkan.",
-        });
+        toast.success("Jenis tes berhasil ditambahkan.");
         reset();
         setImageUrl("");
         setIsOpen(false);
@@ -87,11 +80,7 @@ export default function TestingPage() {
       }
     } catch (error) {
       console.error("Error adding testing type:", error);
-      toast({
-        title: "Error",
-        description: "Gagal menambahkan jenis tes.",
-        variant: "destructive",
-      });
+      toast.error("Gagal menambahkan jenis tes.");
     }
   };
 
@@ -102,19 +91,12 @@ export default function TestingPage() {
       const res = await axios.delete("/api/testing-type", { data: { id } });
 
       if (res.status === 200) {
-        toast({
-          title: "Deleted",
-          description: "Jenis tes berhasil dihapus.",
-        });
+        toast.success("Jenis tes berhasil dihapus.");
         fetchTestingTypes();
       }
     } catch (error) {
       console.error("Error deleting testing type:", error);
-      toast({
-        title: "Error",
-        description: "Gagal menghapus jenis tes.",
-        variant: "destructive",
-      });
+      toast.error("Gagal menghapus jenis tes.");
     }
   };
 

@@ -68,11 +68,7 @@ export default function Page() {
       fetchData();
     } catch (error) {
       console.error("Error deleting test data:", error);
-      toast({
-        title: "Error",
-        description: "Gagal menghapus data.",
-        variant: "destructive",
-      });
+      toast.error("Gagal menghapus data.");
     }
   };
 

@@ -28,19 +28,29 @@ export async function POST(req: Request) {
       );
     }
 
-    // Generate QR Code as base64
-    const qrCode = await QrCode.toDataURL(nama, { errorCorrectionLevel: "H" });
-
-    // Create a new product with the generated QR code
+    // Buat produk baru
     const produk = await prisma.produk.create({
       data: {
         nama,
         deskripsi,
-        qrCode, // Save the QR code as a base64 string
       },
     });
 
-    return NextResponse.json(produk, { status: 201 });
+    // Buat URL untuk QR Code
+    const qrCodeContent = `${process.env.NEXT_PUBLIC_BASE_URL}/product/${produk.id}`;
+
+    // Generate QR Code as base64
+    const qrCode = await QrCode.toDataURL(qrCodeContent, {
+      errorCorrectionLevel: "H",
+    });
+
+    // Perbarui produk dengan QR Code yang baru dibuat
+    const updatedProduk = await prisma.produk.update({
+      where: { id: produk.id },
+      data: { qrCode },
+    });
+
+    return NextResponse.json(updatedProduk, { status: 201 });
   } catch (error) {
     console.error("Error generating QR Code or creating product:", error);
     return NextResponse.json(
