@@ -5,7 +5,11 @@ import { supabase } from "@/lib/supabase";
 
 // GET: Retrieve all testing types
 export async function GET() {
-  const testingTypes = await prisma.testingType.findMany();
+  const testingTypes = await prisma.testingType.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
   return NextResponse.json(testingTypes);
 }
 

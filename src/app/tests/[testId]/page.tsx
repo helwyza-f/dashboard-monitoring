@@ -1,10 +1,11 @@
 import { prisma } from "@/lib/prisma";
-import Image from "next/image";
+
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { downloadQRCode } from "@/lib/actions";
+
 import QRCODE from "./components/qr-code";
+import Status from "./components/status";
 
 export default async function TestDetailPage({
   params,
@@ -37,18 +38,7 @@ export default async function TestDetailPage({
             Informasi Test
           </h2>
           <div className="space-y-4">
-            <div>
-              <p className="text-sm text-gray-500">Status</p>
-              <span
-                className={`inline-block px-3 py-1 rounded-full text-sm ${
-                  test.status === "completed"
-                    ? "bg-green-100 text-green-800"
-                    : "bg-yellow-100 text-yellow-800"
-                }`}
-              >
-                {test.status === "completed" ? "Selesai" : "Dalam Proses"}
-              </span>
-            </div>
+            <Status initialStatus={test.status} testId={test.id} />
             <div>
               <p className="text-sm text-gray-500">Periode Test</p>
               <p className="text-lg">

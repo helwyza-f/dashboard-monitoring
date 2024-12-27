@@ -1,5 +1,16 @@
 import { prisma } from "@/lib/prisma";
+import { TestingType, Test } from "@prisma/client";
 import { NextResponse } from "next/server";
+
+interface Testing {
+  id: string;
+  name: string;
+  imageUrl: string | null;
+  tests: {
+    id: string;
+    status: string;
+  }[];
+}
 
 export async function GET() {
   try {
@@ -9,7 +20,7 @@ export async function GET() {
       },
     });
 
-    const data = testingTypes.map((type) => {
+    const data = testingTypes.map((type: Testing) => {
       const imageUrl = type.imageUrl;
       const typeId = type.id;
       const total = type.tests.length;

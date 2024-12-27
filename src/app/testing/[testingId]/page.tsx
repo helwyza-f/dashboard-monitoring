@@ -3,7 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { downloadQRCode } from "@/lib/actions";
+
 import QRCODE from "./components/qr-code";
 
 export default async function TestingTypePage({

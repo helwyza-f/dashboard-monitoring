@@ -2,6 +2,7 @@
 
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
+import Chart from "@/components/ui/Chart";
 
 interface CardTypeProps {
   testId?: string;
@@ -15,6 +16,14 @@ interface CardTypeProps {
 }
 
 export function CardType({ testId, title, image, stats }: CardTypeProps) {
+  const labels = ["Total", "In Progress", "Finished"];
+  const data = [stats.total, stats.inProgress, stats.finished];
+  const colors = [
+    "rgba(75, 192, 192, 0.6)",
+    "rgba(255, 206, 86, 0.6)",
+    "rgba(54, 162, 235, 0.6)",
+  ];
+
   return (
     <Card className="relative p-6 flex flex-col justify-between">
       <div className="flex justify-between items-center">
@@ -26,6 +35,9 @@ export function CardType({ testId, title, image, stats }: CardTypeProps) {
           alt={title}
           className="w-20 h-20 object-contain rounded-lg border-2 border-green-200"
         />
+      </div>
+      <div className="mt-4">
+        <Chart labels={labels} data={data} colors={colors} />
       </div>
       <div className="mt-4 space-y-2">
         <p className="text-gray-700">

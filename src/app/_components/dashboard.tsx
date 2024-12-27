@@ -1,3 +1,4 @@
+import axios from "axios";
 import { CardType } from "./card-type";
 
 interface TestingTypeStats {
@@ -12,18 +13,16 @@ interface TestingTypeStats {
 }
 
 async function fetchTestingTypes() {
-  const res = await fetch(
+  const res = await axios.get(
     `${process.env.NEXT_PUBLIC_BASE_URL}/api/testing-type/stats`,
     {
-      cache: "no-store",
+      headers: {
+        "Cache-Control": "no-store",
+      },
     }
   );
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-
-  return res.json();
+  return res.data;
 }
 
 export default async function DashboardPage() {
