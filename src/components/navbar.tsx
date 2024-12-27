@@ -12,15 +12,32 @@ export default function Navbar() {
 
   return (
     <header className="bg-gray-100 text-green-600 fixed top-0 left-0 w-full z-50 shadow">
-      <div className="w-full p-6 flex justify-between items-center">
+      <div className="w-full p-4 md:px-10 flex justify-between items-center">
         {/* Bagian Kiri */}
         <div>
-          <h1 className="text-6xl font-bold">B - LAB</h1>
-          <h3 className="text-l">Welcome to Surveillance Dashboard</h3>
+          <h1 className="text-4xl font-bold">B - LAB</h1>
+          <h3 className="text-lg">Welcome to Surveillance Dashboard</h3>
         </div>
 
         {/* Bagian Kanan */}
-        <div className="relative">
+        <div className="relative hidden md:flex">
+          <nav className="flex space-x-8">
+            <Link href="/" className="hover:text-green-700">
+              Dashboard
+            </Link>
+            <Link href="/testing" className="hover:text-green-700">
+              Jenis Test
+            </Link>
+            <Link href="/product" className="hover:text-green-700">
+              Product
+            </Link>
+            <Link href="/tests" className="hover:text-green-700">
+              Data Test
+            </Link>
+          </nav>
+        </div>
+
+        <div className="relative md:hidden">
           <button
             id="hamburger-btn"
             className="p-2 rounded-md hover:bg-green-200 transition duration-200"
@@ -76,7 +93,6 @@ export default function Navbar() {
                     Product
                   </Link>
                 </li>
-
                 <li>
                   <Link
                     href="/tests"
